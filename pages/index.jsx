@@ -1,40 +1,8 @@
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
-
+import { useState } from 'react';
+import { useRouter } from 'next/router';
 import appConfig from '../config.json';
 
-const GlobalStyle = () => (
-    <style global jsx>{
-        `
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            list-style: none;
-        }
-
-        body {
-            font-family: 'Open Sans', sans-serif;
-        }
-      
-        /* App fit Height */ 
-        html, body, #__next {
-            min-height: 100vh;
-            display: flex;
-            flex: 1;
-        }
-        
-        #__next {
-            flex: 1;
-        }
-        
-        #__next > * {
-            flex: 1;
-        }
-      /* ./App fit Height */ 
-        `
-    }
-    </style>
-);
 
 const Title = ({ children, tag = 'h1' }) => {
     const Tag = tag;
@@ -76,16 +44,28 @@ const Title = ({ children, tag = 'h1' }) => {
 // };
 
 const HomePage = () => {
-    const username = 'zNexTage';
+    const [username, setUsername] = useState('zNexTage');
+    const router = useRouter();
+
+
+    const handleUsername = event => {
+        setUsername(event.target.value);
+    }
+
+    const onSubmit = event => {
+        event.preventDefault();
+
+        router.push('/chat');
+    }
 
     return (
         <>
-            <GlobalStyle />
             <Box
                 styleSheet={{
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    backgroundColor: appConfig.theme.colors.primary[500],
-                    backgroundImage: 'url(https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg)',
+                    backgroundColor: appConfig.theme.colors.primary['400'],
+                    // backgroundImage: 'url(https://www.wallpapertip.com/wmimgs/1-11293_vaporwave-wallpaper-vaporwave-wallpaper-space.jpg)',
+                    backgroundImage: 'url(https://w.wallha.com/ws/12/7TD08dxC.jpg)',
                     backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
                 }}
             >
@@ -106,6 +86,7 @@ const HomePage = () => {
                 >
                     {/* Formulário */}
                     <Box
+                        onSubmit={onSubmit}
                         as="form"
                         styleSheet={{
                             display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
@@ -118,6 +99,7 @@ const HomePage = () => {
                         </Text>
 
                         <TextField
+                            onChange={handleUsername}
                             fullWidth
                             textFieldColors={{
                                 neutral: {
