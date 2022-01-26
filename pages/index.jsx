@@ -1,6 +1,8 @@
-import { Box, Button, Text, TextField, Image } from '@skynexui/components';
+import { Box, Button, Text, TextField } from '@skynexui/components';
 import { useState } from 'react';
+import Image from 'next/image'
 import { useRouter } from 'next/router';
+import CustomUserIcon from '../assets/UserIcon.png';
 import appConfig from '../config.json';
 
 
@@ -45,6 +47,7 @@ const Title = ({ children, tag = 'h1' }) => {
 
 const HomePage = () => {
     const [username, setUsername] = useState('zNexTage');
+    const [userImg, setUserImg] = useState(`https://github.com/${username}.png`);
     const router = useRouter();
 
 
@@ -139,14 +142,26 @@ const HomePage = () => {
                             borderRadius: '10px',
                             flex: 1,
                             minHeight: '240px',
+                            position: 'relative'
                         }}
                     >
                         <Image
-                            styleSheet={{
-                                borderRadius: '50%',
-                                marginBottom: '16px',
+                            className='avatar'
+                            placeholder='blur'
+                            blurDataURL={CustomUserIcon}
+                            width={200}
+                            height={200}
+                            objectFit='cover'
+                            onError={() => {
+                                setUserImg(CustomUserIcon);
                             }}
-                            src={`https://github.com/${username}.png`}
+                            onLoadingComplete={(event) => {
+                                if (event.naturalWidth > 0) {
+                                    setUserImg(`https://github.com/${username}.png`)
+                                }
+                            }}
+                            layout='intrinsic'
+                            src={userImg}
                         />
                         <Text
                             variant="body4"
@@ -154,7 +169,8 @@ const HomePage = () => {
                                 color: appConfig.theme.colors.neutrals[200],
                                 backgroundColor: appConfig.theme.colors.neutrals[900],
                                 padding: '3px 10px',
-                                borderRadius: '1000px'
+                                borderRadius: '1000px',
+                                marginTop: "20px"
                             }}
                         >
                             {username}

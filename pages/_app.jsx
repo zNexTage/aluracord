@@ -27,6 +27,10 @@ const GlobalStyle = () => (
             flex: 1;
         }
       /* ./App fit Height */ 
+
+      .avatar {
+        border-radius: 50%;
+      }
         `
     }
     </style>
