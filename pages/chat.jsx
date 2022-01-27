@@ -52,6 +52,12 @@ const Chat = () => {
         setMessage('');
     }
 
+    const handleSendMessage = event => {
+        event.preventDefault();
+        
+        insertMessage();
+    }
+
     return (
         <Box
             styleSheet={{
@@ -98,6 +104,7 @@ const Chat = () => {
                     />
 
                     <Box
+                        onSubmit={handleSendMessage}
                         as="form"
                         styleSheet={{
                             display: 'flex',
@@ -121,6 +128,26 @@ const Chat = () => {
                                 color: appConfig.theme.colors.neutrals[200],
                             }}
                         />
+
+                        <Box styleSheet={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
+                            <Button
+                                type='submit'
+                                label='Enviar'
+                                styleSheet={{
+                                    marginBottom: '8px'
+                                }}
+                                buttonColors={{
+                                    contrastColor: appConfig.theme.colors.neutrals["000"],
+                                    mainColor: appConfig.theme.colors.secondary[999],
+                                    mainColorLight: appConfig.theme.colors.primary[600],
+                                    mainColorStrong: appConfig.theme.colors.primary[900],
+                                }}
+                            />
+                        </Box>
                     </Box>
                 </Box>
             </Box>
