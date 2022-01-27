@@ -1,11 +1,31 @@
 import { Box, Text, TextField, Image, Button } from '@skynexui/components';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import appConfig from '../config.json';
+import { createClient } from '@supabase/supabase-js'
+
+
+const SUPABASE_ANON_KEY = '***REMOVED***';
+const SUPABASE_URL = '***REMOVED***';
+
+const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 
 
 const Chat = () => {
     const [message, setMessage] = useState('');
     const [listMessages, setListMessages] = useState([]);
+
+
+    const getMessages = async () => {
+        const { data } = await supabaseClient
+            .from('messages')
+            .select('*')
+            .order('id', { ascending: false });
+
+        setListMessages(data);
+    }
+
+    useEffect(getMessages, []);
 
     const handleMessage = event => {
         setMessage(event.target.value);
@@ -14,16 +34,22 @@ const Chat = () => {
     const handleKeyPressMessage = event => {
 
         if (event.charCode === 13) {
-            const newMessage = {
-                id: listMessages.length + 1,
-                from: 'zNexTage',
-                text: message
-            }
-
+            insertMessage();
             event.preventDefault();
-            setListMessages([newMessage, ...listMessages]);
-            setMessage('');
         }
+    }
+
+    const insertMessage = async () => {
+        const newMessage = {
+            from: 'zNexTage',
+            text: message
+        }
+
+        const { data } = await supabaseClient.from('messages')
+            .insert([newMessage]);
+
+        setListMessages([data.pop(), ...listMessages]);
+        setMessage('');
     }
 
     return (

@@ -152,7 +152,8 @@ const HomePage = () => {
                             width={200}
                             height={200}
                             objectFit='cover'
-                            onError={() => {
+                            onError={(event) => {
+                                event.preventDefault();
                                 setUserImg(CustomUserIcon);
                             }}
                             onLoadingComplete={(event) => {
