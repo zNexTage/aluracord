@@ -1,8 +1,6 @@
-import { Box, Button, Text, TextField } from '@skynexui/components';
+import { Box, Button, Text, TextField, Image } from '@skynexui/components';
 import { useState } from 'react';
-import Image from 'next/image'
 import { useRouter } from 'next/router';
-import CustomUserIcon from '../assets/UserIcon.png';
 import appConfig from '../config.json';
 
 
@@ -47,7 +45,6 @@ const Title = ({ children, tag = 'h1' }) => {
 
 const HomePage = () => {
     const [username, setUsername] = useState('zNexTage');
-    const [userImg, setUserImg] = useState(`https://github.com/${username}.png`);
     const router = useRouter();
 
 
@@ -103,6 +100,7 @@ const HomePage = () => {
 
                         <TextField
                             onChange={handleUsername}
+                            value={username}
                             fullWidth
                             textFieldColors={{
                                 neutral: {
@@ -146,23 +144,11 @@ const HomePage = () => {
                         }}
                     >
                         <Image
-                            className='avatar'
-                            placeholder='blur'
-                            blurDataURL={CustomUserIcon}
-                            width={200}
-                            height={200}
-                            objectFit='cover'
-                            onError={(event) => {
-                                event.preventDefault();
-                                setUserImg(CustomUserIcon);
+                            styleSheet={{
+                                borderRadius: '50%',
+                                marginBottom: '16px',
                             }}
-                            onLoadingComplete={(event) => {
-                                if (event.naturalWidth > 0) {
-                                    setUserImg(`https://github.com/${username}.png`)
-                                }
-                            }}
-                            layout='intrinsic'
-                            src={userImg}
+                            src={username.length > 1 ? `https://github.com/${username}.png` : '/UserIcon.png'}
                         />
                         <Text
                             variant="body4"
@@ -174,7 +160,7 @@ const HomePage = () => {
                                 marginTop: "20px"
                             }}
                         >
-                            {username}
+                            {username || '-'}
                         </Text>
                     </Box>
                     {/* Photo Area */}
