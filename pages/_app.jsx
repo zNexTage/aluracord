@@ -8,6 +8,23 @@ const GlobalStyle = () => (
             list-style: none;
         }
 
+        /* width */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+    
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+     
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #888; 
+        }
+    
+        
+
         body {
             font-family: 'Open Sans', sans-serif;
         }
@@ -28,9 +45,9 @@ const GlobalStyle = () => (
         }
       /* ./App fit Height */ 
 
-      .avatar {
-        border-radius: 50%;
-      }
+      
+
+  
         `
     }
     </style>
