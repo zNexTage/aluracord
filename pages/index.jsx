@@ -25,23 +25,7 @@ const Title = ({ children, tag = 'h1' }) => {
     );
 };
 
-//Componente React
-// const HomePage = () => {
-//     return (
-//         <div>
-//             <GlobalStyle />
-//             <hgroup>
-//                 <Title tag="h2">
-//                     Boas vindas de volta!!
-//                 </Title>
-//                 <h2>
-//                     Discord - Vaporwave Channel
-//                 </h2>
-//             </hgroup>
 
-//         </div>
-//     );
-// };
 
 const HomePage = () => {
     const [username, setUsername] = useState('zNexTage');
@@ -63,8 +47,7 @@ const HomePage = () => {
             <Box
                 styleSheet={{
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    backgroundColor: appConfig.theme.colors.primary['400'],
-                    // backgroundImage: 'url(https://www.wallpapertip.com/wmimgs/1-11293_vaporwave-wallpaper-vaporwave-wallpaper-space.jpg)',
+                    backgroundColor: appConfig.theme.colors.primary['400'],                    
                     backgroundImage: 'url(https://w.wallha.com/ws/12/7TD08dxC.jpg)',
                     backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
                 }}
@@ -81,7 +64,9 @@ const HomePage = () => {
                         width: '100%', maxWidth: '700px',
                         borderRadius: '5px', padding: '32px', margin: '16px',
                         boxShadow: '0 2px 10px 0 rgb(0 0 0 / 20%)',
-                        backgroundColor: appConfig.theme.colors.neutrals[700],
+                        backgroundColor:`rgba(${appConfig.theme.colors.rgb['700']}, .80);`,
+                        backdropFilter: 'blur(2px)'
+                        
                     }}
                 >
                     {/* Formulário */}
@@ -117,9 +102,9 @@ const HomePage = () => {
                             fullWidth
                             buttonColors={{
                                 contrastColor: appConfig.theme.colors.neutrals["000"],
-                                mainColor: appConfig.theme.colors.primary[500],
-                                mainColorLight: appConfig.theme.colors.primary[400],
-                                mainColorStrong: appConfig.theme.colors.primary[600],
+                                mainColor: appConfig.theme.colors.primary[700],
+                                mainColorLight: appConfig.theme.colors.primary[600],
+                                mainColorStrong: appConfig.theme.colors.primary[900],
                             }}
                         />
                     </Box>
@@ -134,7 +119,7 @@ const HomePage = () => {
                             alignItems: 'center',
                             maxWidth: '200px',
                             padding: '16px',
-                            backgroundColor: appConfig.theme.colors.neutrals[800],
+                            backgroundColor: `rgba(${appConfig.theme.colors.rgb['800']}, .80);`,
                             border: '1px solid',
                             borderColor: appConfig.theme.colors.neutrals[999],
                             borderRadius: '10px',
