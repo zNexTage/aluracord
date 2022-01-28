@@ -6,10 +6,10 @@ import { createClient } from '@supabase/supabase-js'
 import UserCard from '../components/userCard';
 
 
-const SUPABASE_ANON_KEY = '***REMOVED***';
-const SUPABASE_URL = '***REMOVED***';
+const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 
-const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabaseClient = createClient(SUPABASE_URL,  SUPABASE_ANON_KEY);
 
 const MAX_LENGTH_MESSAGE = 250;
 
@@ -43,7 +43,7 @@ const Chat = (props) => {
     useEffect(getMessages, []);
 
     const handleMessage = event => {
-        
+
         setMessage(event.target.value);
     }
 
