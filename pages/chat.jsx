@@ -1,5 +1,6 @@
 import { Box, Text, TextField, Image, Button, Icon } from '@skynexui/components';
 import React, { useEffect, useState } from 'react';
+import { useRouter, withRouter } from 'next/router';
 import appConfig from '../config.json';
 import { createClient } from '@supabase/supabase-js'
 import UserCard from '../components/userCard';
@@ -12,10 +13,23 @@ const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 
 
-const Chat = () => {
+const Chat = (props) => {
     const [message, setMessage] = useState('');
     const [listMessages, setListMessages] = useState([]);
+    const router = useRouter();
+    const [username, setUsername] = useState('');
 
+
+    useEffect(() => {
+        const usernameParam = props.router.query?.username;
+
+        if (!usernameParam) {
+            router.replace('/');
+            return;
+        }
+
+        setUsername(usernameParam);
+    }, []);
 
     const getMessages = async () => {
         const { data } = await supabaseClient
@@ -42,7 +56,7 @@ const Chat = () => {
 
     const insertMessage = async () => {
         const newMessage = {
-            from: 'zNexTage',
+            from: username,
             text: message
         }
 
@@ -84,7 +98,7 @@ const Chat = () => {
                     padding: '32px',
                 }}
             >
-                <Header />
+                <Header username={username} />
                 <Box
                     styleSheet={{
                         position: 'relative',
@@ -156,21 +170,29 @@ const Chat = () => {
     )
 }
 
-const Header = () => {
+const Header = ({ username }) => {
     return (
-        <>
-            <Box styleSheet={{ width: '100%', marginBottom: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }} >
+        <Box styleSheet={{
+            marginBottom: '16px'
+        }}>
+            <Box styleSheet={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }} >
                 <Text variant='heading5'>
                     Chat
                 </Text>
+
                 <Button
                     variant='tertiary'
                     colorVariant='neutral'
                     label='Logout'
                     href="/"
                 />
+
             </Box>
-        </>
+
+            <Text variant='heading5'>
+                Olá, {username}
+            </Text>
+        </Box>
     )
 }
 
@@ -270,4 +292,4 @@ const MessageList = ({ messages }) => {
     )
 }
 
-export default Chat;
+export default withRouter(Chat);

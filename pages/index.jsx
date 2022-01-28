@@ -28,7 +28,7 @@ const Title = ({ children, tag = 'h1' }) => {
 
 
 const HomePage = () => {
-    const [username, setUsername] = useState('zNexTage');
+    const [username, setUsername] = useState('');
     const router = useRouter();
 
 
@@ -39,7 +39,12 @@ const HomePage = () => {
     const onSubmit = event => {
         event.preventDefault();
 
-        router.push('/chat');
+        router.push({
+            pathname: '/chat',
+            query: {
+                username
+            }
+        });
     }
 
     return (
@@ -47,7 +52,7 @@ const HomePage = () => {
             <Box
                 styleSheet={{
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    backgroundColor: appConfig.theme.colors.primary['400'],                    
+                    backgroundColor: appConfig.theme.colors.primary['400'],
                     backgroundImage: 'url(https://w.wallha.com/ws/12/7TD08dxC.jpg)',
                     backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
                 }}
@@ -64,9 +69,9 @@ const HomePage = () => {
                         width: '100%', maxWidth: '700px',
                         borderRadius: '5px', padding: '32px', margin: '16px',
                         boxShadow: '0 2px 10px 0 rgb(0 0 0 / 20%)',
-                        backgroundColor:`rgba(${appConfig.theme.colors.rgb['700']}, .80);`,
+                        backgroundColor: `rgba(${appConfig.theme.colors.rgb['700']}, .80);`,
                         backdropFilter: 'blur(2px)'
-                        
+
                     }}
                 >
                     {/* Formulário */}
