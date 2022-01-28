@@ -1,5 +1,5 @@
 import { Image, Box, Text, Button } from "@skynexui/components";
-import appConfig from '../config.json';
+import appConfig from '../../config.json';
 
 const UserCard = ({ user, onCloseClick, loading }) => (
     <Box

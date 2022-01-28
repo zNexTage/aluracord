@@ -1,19 +1,29 @@
 import { Box, Text, TextField, Image, Button, Icon } from '@skynexui/components';
 import React, { useEffect, useState } from 'react';
-import { useRouter, withRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import appConfig from '../config.json';
 import { createClient } from '@supabase/supabase-js'
-import UserCard from '../components/userCard';
+import UserCard from '../src/components/UserCard';
+import ButtonSendSticker from '../src/components/ButtonSendSticker';
 
 
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 
-const supabaseClient = createClient(SUPABASE_URL,  SUPABASE_ANON_KEY);
+const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const MAX_LENGTH_MESSAGE = 250;
 
-const Chat = (props) => {
+const listenerMessagesInRealTime = (addMessage) => {
+    return supabaseClient
+        .from('messages')
+        .on('INSERT', data => {
+            addMessage(data.new);
+        })
+        .subscribe();
+}
+
+const Chat = () => {
     const [message, setMessage] = useState('');
     const [listMessages, setListMessages] = useState([]);
     const router = useRouter();
@@ -21,7 +31,7 @@ const Chat = (props) => {
 
 
     useEffect(() => {
-        const usernameParam = props.router.query?.username;
+        const usernameParam = router.query?.username;
 
         if (!usernameParam) {
             router.replace('/');
@@ -40,7 +50,16 @@ const Chat = (props) => {
         setListMessages(data);
     }
 
-    useEffect(getMessages, []);
+    useEffect(() => {
+        getMessages();
+        listenerMessagesInRealTime((newMessage) => {
+            //Quero usar um valor de referência (objeto/array)
+            //Passar função para o setState
+            setListMessages((actuaList) => {
+                return [newMessage, ...actuaList]
+            });
+        });
+    }, []);
 
     const handleMessage = event => {
 
@@ -50,21 +69,19 @@ const Chat = (props) => {
     const handleKeyPressMessage = event => {
 
         if (event.charCode === 13) {
-            insertMessage();
+            insertMessage(message);
             event.preventDefault();
         }
     }
 
-    const insertMessage = async () => {
-        const newMessage = {
-            from: username,
-            text: message
-        }
-
+    const insertMessage = async (newMessage) => {
         const { data } = await supabaseClient.from('messages')
-            .insert([newMessage]);
+            .insert([{
+                from: username,
+                text: newMessage
+            }]);
 
-        setListMessages([data.pop(), ...listMessages]);
+        // setListMessages([data.pop(), ...listMessages]);
         setMessage('');
     }
 
@@ -72,6 +89,7 @@ const Chat = (props) => {
         event.preventDefault();
 
         if (!message) {
+            alert('Digite a mensagem!!');
             return;
         }
 
@@ -80,7 +98,11 @@ const Chat = (props) => {
             return;
         }
 
-        insertMessage();
+        insertMessage(message);
+    }
+
+    const onStickerClick = (stickerUrl) => {
+        insertMessage(`:sticker:${stickerUrl}`)
     }
 
     return (
@@ -103,7 +125,7 @@ const Chat = (props) => {
                     backgroundColor: `rgba(${appConfig.theme.colors.rgb['700']}, .80);`,
                     backdropFilter: 'blur(2px)',
                     height: '100%',
-                    maxWidth: '60%',
+                    maxWidth: '90%',
                     maxHeight: '95vh',
                     padding: '32px',
                 }}
@@ -160,6 +182,17 @@ const Chat = (props) => {
                             justifyContent: 'center',
                             alignItems: 'center'
                         }}>
+                            <ButtonSendSticker
+                                onStickerClick={onStickerClick}
+                            />
+                        </Box>
+
+
+                        {/* <Box styleSheet={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
                             <Button
                                 type='submit'
                                 label='Enviar'
@@ -173,7 +206,7 @@ const Chat = (props) => {
                                     mainColorStrong: appConfig.theme.colors.primary[900],
                                 }}
                             />
-                        </Box>
+                        </Box> */}
                     </Box>
                 </Box>
             </Box>
@@ -300,7 +333,12 @@ const MessageList = ({ messages }) => {
                     <Text styleSheet={{
                         overflowWrap: 'break-word'
                     }} tag='p'>
-                        {message.text}
+                        {/*Declarativo */}
+                        {message.text.startsWith(':sticker:') ? (
+                            <Image src={message.text.replace(':sticker:', '')} />
+                        ) : (
+                            message.text
+                        )}
                     </Text>
                 </Text>
             ))}
@@ -308,4 +346,4 @@ const MessageList = ({ messages }) => {
     )
 }
 
-export default withRouter(Chat);
+export default Chat;
