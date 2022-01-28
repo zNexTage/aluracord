@@ -11,7 +11,7 @@ const SUPABASE_URL = '***REMOVED***';
 
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-
+const MAX_LENGTH_MESSAGE = 250;
 
 const Chat = (props) => {
     const [message, setMessage] = useState('');
@@ -43,6 +43,7 @@ const Chat = (props) => {
     useEffect(getMessages, []);
 
     const handleMessage = event => {
+        
         setMessage(event.target.value);
     }
 
@@ -69,6 +70,15 @@ const Chat = (props) => {
 
     const handleSendMessage = event => {
         event.preventDefault();
+
+        if (!message) {
+            return;
+        }
+
+        if (message.length > MAX_LENGTH_MESSAGE) {
+            alert('A mensagem deve ter no máximo 250 caracteres.');
+            return;
+        }
 
         insertMessage();
     }
@@ -131,6 +141,7 @@ const Chat = (props) => {
                             type="textarea"
                             onChange={handleMessage}
                             onKeyPress={handleKeyPressMessage}
+                            maxLength={MAX_LENGTH_MESSAGE}
                             value={message}
                             styleSheet={{
                                 width: '100%',
@@ -280,12 +291,17 @@ const MessageList = ({ messages }) => {
                                 marginLeft: '8px',
                                 color: appConfig.theme.colors.neutrals[300],
                             }}
+
                             tag="span"
                         >
                             {(new Date().toLocaleDateString())}
                         </Text>
                     </Box>
-                    {message.text}
+                    <Text styleSheet={{
+                        overflowWrap: 'break-word'
+                    }} tag='p'>
+                        {message.text}
+                    </Text>
                 </Text>
             ))}
         </Box>
