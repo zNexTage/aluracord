@@ -1,7 +1,8 @@
-import { Box, Text, TextField, Image, Button } from '@skynexui/components';
+import { Box, Text, TextField, Image, Button, Icon } from '@skynexui/components';
 import React, { useEffect, useState } from 'react';
 import appConfig from '../config.json';
 import { createClient } from '@supabase/supabase-js'
+import UserCard from '../components/userCard';
 
 
 const SUPABASE_ANON_KEY = '***REMOVED***';
@@ -54,7 +55,7 @@ const Chat = () => {
 
     const handleSendMessage = event => {
         event.preventDefault();
-        
+
         insertMessage();
     }
 
@@ -174,6 +175,15 @@ const Header = () => {
 }
 
 const MessageList = ({ messages }) => {
+    const [showUserInfo, setShowUserInfo] = useState();
+    const [userInfo, setUserInfo] = useState({});
+    const [loading, setLoading] = useState(false);
+
+    const onCloseCard = () => {
+        setUserInfo(null);
+        setShowUserInfo(undefined);
+    }
+
     return (
         <Box
             tag="ul"
@@ -184,6 +194,7 @@ const MessageList = ({ messages }) => {
                 flex: 1,
                 color: appConfig.theme.colors.neutrals["000"],
                 marginBottom: '16px',
+                position: 'relative'
             }}
         >
             {messages.map(message => (
@@ -202,9 +213,33 @@ const MessageList = ({ messages }) => {
                     <Box
                         styleSheet={{
                             marginBottom: '8px',
+
                         }}
                     >
+                        {showUserInfo === message.id &&
+                            <UserCard
+                                loading={loading}
+                                onCloseClick={onCloseCard}
+                                user={userInfo} />
+                        }
                         <Image
+                            onClick={async () => {
+                                setShowUserInfo(message.id);
+
+                                try {
+                                    setLoading(true);
+                                    const response = await fetch(`https://api.github.com/users/${message.from}`)
+                                    const data = await response.json();
+
+                                    setUserInfo(data);
+                                }
+                                catch (err) {
+                                    //TODO: Tratar o erro
+                                }
+                                finally {
+                                    setLoading(false);
+                                }
+                            }}
                             styleSheet={{
                                 width: '20px',
                                 height: '20px',
