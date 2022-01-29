@@ -13,7 +13,13 @@ const UserCard = ({ user, onCloseClick, loading }) => (
                 sm: '100%',
                 xs: '100%'
             },
-            justifyContent: 'center',
+            justifyContent: {
+                xl: 'center',
+                lg: 'center',
+                md: 'center',
+                sm: 'flex-start',
+                xs: 'flex-start'
+            },
             alignItems: 'center',
             zIndex: 999,
             width: '100%',
@@ -40,12 +46,19 @@ const UserCard = ({ user, onCloseClick, loading }) => (
                 sm: '0px',
                 xs: '0px'
             },
-            padding: '10px',
+            borderRadius: {
+                xl: '10px',
+                lg: '10px',
+                md: '10px',
+                sm: 'none',
+                xs: 'none'
+            }
         }}>
         <Box styleSheet={{
             position: 'absolute',
             right: '10px',
-            top: '10px'
+            top: '10px',
+            zIndex: '1000'
         }}>
 
             <Box
@@ -60,24 +73,61 @@ const UserCard = ({ user, onCloseClick, loading }) => (
                 X
             </Box>
         </Box>
-        <Image
+        <Box
             styleSheet={{
-                width: '80px',
-                height: '80px',
-                borderRadius: '50%',
-                display: 'inline-block',
-                marginRight: '8px',
-                marginBottom: '8px'
-            }}
-            src={loading ? 'UserIcon.png' : `https://github.com/${user.login}.png`}
-        />
+                width: '100%',
+                height: {
+                    xl: 'auto',
+                    lg: 'auto',
+                    md: 'auto',
+                    sm: '100%',
+                    xs: '100%'
+                },
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'flex-end',
+                maxHeight: '250px',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
+                backgroundSize: 'cover',
+                borderRadius: {
+                    xl: '10px 10px 0 0',
+                    lg: '10px 10px 0 0',
+                    md: '10px 10px 0 0',
+                    sm: 'none',
+                    xs: 'none'
+                },
+                position: 'relative',
+                backgroundImage: `url(/UserIconBackground.jpg)`
+            }}>
+            <Image
+                styleSheet={{
+                    width: '80px',
+                    height: '80px',
+                    borderRadius: '50%',
+                    display: 'inline-block',
+                    marginRight: '8px',
+                    marginBottom: '8px',
+                    marginTop: '80px',
+                    border: `2px solid ${appConfig.theme.colors.secondary['999']}`,
+                }}
+                src={loading ? 'UserIcon.png' : `https://github.com/${user.login}.png`}
+            />
+        </Box>
 
-        <Box>
+
+        <Box styleSheet={{
+            padding: '10px',
+            display: 'flex',
+            flex: '1',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column'
+        }}>
             <Box
                 tag='h1'
                 styleSheet={{
                     fontSize: '1.15em',
-                    textAlign: 'center',
                 }}
             >
                 {loading ? '...' : user.name}
@@ -154,7 +204,7 @@ const UserCard = ({ user, onCloseClick, loading }) => (
                 </Text>
             }
         </Box>
-    </Box>
+    </Box >
 
 )
 
