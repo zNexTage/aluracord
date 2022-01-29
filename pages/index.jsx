@@ -70,7 +70,7 @@ const HomePage = () => {
                         borderRadius: '5px', padding: '32px', margin: '16px',
                         boxShadow: '0 2px 10px 0 rgb(0 0 0 / 20%)',
                         backgroundColor: `rgba(${appConfig.theme.colors.rgb['700']}, .80);`,
-                        backdropFilter: 'blur(2px)'
+                        // backdropFilter: 'blur(2px)'
 
                     }}
                 >
