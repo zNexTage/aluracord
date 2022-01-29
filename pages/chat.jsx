@@ -58,7 +58,7 @@ const Chat = () => {
             setListMessages(data);
         }
         catch (err) {
-            //TODO: Tratar o erro aqui
+            alert('Não foi possível obter as mensagens...');
         }
         finally {
             setIsLoadingMessage(false);
@@ -339,9 +339,14 @@ const MessageList = ({ messages, username }) => {
         const confirmDelete = confirm('Deseja realmente apagar essa mensagem?');
 
         if (confirmDelete) {
-            await supabaseClient.from('messages')
-                .delete()
-                .match({ id: messageId })
+            try {
+                await supabaseClient.from('messages')
+                    .delete()
+                    .match({ id: messageId })
+            }
+            catch (err) {
+                alert('Não foi possível remover a sua mensagem...');
+            }
         }
     }
 
@@ -402,7 +407,7 @@ const MessageList = ({ messages, username }) => {
                                         setUserInfo(data);
                                     }
                                     catch (err) {
-                                        //TODO: Tratar o erro
+                                        alert('Não foi possível obter as informações desse usuário...');
                                     }
                                     finally {
                                         setLoading(false);
