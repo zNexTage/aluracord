@@ -176,6 +176,13 @@ const Chat = () => {
                         styleSheet={{
                             display: 'flex',
                             alignItems: 'center',
+                            flexDirection: {
+                                xl: 'row',
+                                lg: 'row',
+                                md: 'row',
+                                sm: 'column',
+                                xs: 'column'
+                            }
                         }}
                     >
                         <TextField
@@ -200,11 +207,21 @@ const Chat = () => {
 
                         <Box styleSheet={{
                             display: 'flex',
-                            justifyContent: 'center',
                             alignItems: 'center'
                         }}>
                             <ButtonSendSticker
                                 onStickerClick={onStickerClick}
+                            />
+                            <Button
+                                onClick={handleSendMessage}
+                                buttonColors={{
+                                    contrastColor: appConfig.theme.colors.primary['050'],
+                                    mainColor: appConfig.theme.colors.primary['900']
+                                }}
+                                styleSheet={{
+                                    marginLeft: '10px'
+                                }}
+                                iconName="arrowRight"
                             />
                         </Box>
                     </Box>
@@ -254,7 +271,7 @@ const Header = ({ username }) => {
                     </Box>
                     <Button
                         buttonColors={{
-                            contrastColor:appConfig.theme.colors.neutrals['000']
+                            contrastColor: appConfig.theme.colors.neutrals['000']
                         }}
                         label='Sair'
                         href="/"
