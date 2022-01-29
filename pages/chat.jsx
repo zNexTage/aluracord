@@ -145,7 +145,7 @@ const Chat = () => {
                         flex: 1,
                         height: '80%',
                         backgroundColor: `rgba(${appConfig.theme.colors.rgb['600']}, .80);`,
-                        backdropFilter: 'blur(2px)',
+                        // backdropFilter: 'blur(2px)',
                         flexDirection: 'column',
                         borderRadius: '5px',
                         padding: '16px',
@@ -172,6 +172,7 @@ const Chat = () => {
                             onKeyPress={handleKeyPressMessage}
                             maxLength={MAX_LENGTH_MESSAGE}
                             value={message}
+                            counter={false}
                             styleSheet={{
                                 width: '100%',
                                 border: '0',
@@ -343,6 +344,21 @@ const MessageList = ({ messages }) => {
                             <Text
                                 styleSheet={{
                                     fontSize: '10px',
+                                    display: 'flex',
+                                    justifyContent: {
+                                        xl: 'center',
+                                        lg: 'center',
+                                        md: 'center',
+                                        sm: 'flex-start',
+                                        xs: 'flex-start'
+                                    },
+                                    alignItems: {
+                                        xl: 'center',
+                                        lg: 'center',
+                                        md: 'center',
+                                        sm: 'flex-start',
+                                        xs: 'flex-start'
+                                    },
                                     marginLeft: {
                                         xl: '8px',
                                         lg: '8px',
