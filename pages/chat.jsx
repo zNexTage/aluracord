@@ -142,7 +142,7 @@ const Chat = () => {
                     flex: 1,
                     boxShadow: '0 2px 10px 0 rgb(0 0 0 / 20%)',
                     borderRadius: '5px',
-                    backgroundColor: `rgba(${appConfig.theme.colors.rgb['700']}, .80);`,
+                    backgroundColor: `rgba(${appConfig.theme.colors.secondary.rgb['999']}, .80);`,
                     height: '100%',
                     maxWidth: '90%',
                     maxHeight: '95vh',
@@ -207,27 +207,6 @@ const Chat = () => {
                                 onStickerClick={onStickerClick}
                             />
                         </Box>
-
-
-                        {/* <Box styleSheet={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}>
-                            <Button
-                                type='submit'
-                                label='Enviar'
-                                styleSheet={{
-                                    marginBottom: '8px'
-                                }}
-                                buttonColors={{
-                                    contrastColor: appConfig.theme.colors.neutrals["000"],
-                                    mainColor: appConfig.theme.colors.secondary[999],
-                                    mainColorLight: appConfig.theme.colors.primary[600],
-                                    mainColorStrong: appConfig.theme.colors.primary[900],
-                                }}
-                            />
-                        </Box> */}
                     </Box>
                 </Box>
 
@@ -249,7 +228,7 @@ const Header = ({ username }) => {
 
                 <Box styleSheet={{
                     display: 'inline-flex',
-                    border: `1px solid ${appConfig.theme.colors.primary['800']}`,
+                    border: `1px solid ${appConfig.theme.colors.primary['050']}`,
                     padding: '10px',
                     borderRadius: '10px',
                     alignItems: 'center',
