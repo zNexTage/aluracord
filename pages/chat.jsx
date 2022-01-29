@@ -213,7 +213,7 @@ const Chat = () => {
                                 onStickerClick={onStickerClick}
                             />
                             <Button
-                                onClick={handleSendMessage}
+                                type='submit'
                                 buttonColors={{
                                     contrastColor: appConfig.theme.colors.primary['050'],
                                     mainColor: appConfig.theme.colors.primary['900']
