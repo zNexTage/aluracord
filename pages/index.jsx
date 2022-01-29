@@ -68,8 +68,8 @@ const HomePage = () => {
                         },
                         width: '100%', maxWidth: '700px',
                         borderRadius: '5px', padding: '32px', margin: '16px',
-                        boxShadow: '0 2px 10px 0 rgb(0 0 0 / 20%)',
-                        backgroundColor: `rgba(${appConfig.theme.colors.rgb['700']}, .80);`,
+                        boxShadow: '0 2px 10px 0 rgb(0 0 0 / 60%)',
+                        backgroundColor: `rgba(${appConfig.theme.colors.secondary.rgb['999']}, .85);`,
                         // backdropFilter: 'blur(2px)'
 
                     }}
@@ -84,7 +84,7 @@ const HomePage = () => {
                         }}
                     >
                         <Title tag="h2">Boas vindas de volta!</Title>
-                        <Text variant="body3" styleSheet={{ marginBottom: '32px', color: appConfig.theme.colors.neutrals[300] }}>
+                        <Text variant="body3" styleSheet={{ marginBottom: '32px', color: appConfig.theme.colors.neutrals['000'] }}>
                             {appConfig.name}
                         </Text>
 
@@ -97,8 +97,8 @@ const HomePage = () => {
                                     textColor: appConfig.theme.colors.neutrals[200],
                                     mainColor: appConfig.theme.colors.neutrals[900],
                                     mainColorHighlight: appConfig.theme.colors.primary[500],
-                                    backgroundColor: appConfig.theme.colors.neutrals[800],
-                                },
+                                    backgroundColor: `rgba(${appConfig.theme.colors.rgb['800']}, .80);`
+                            },
                             }}
                         />
                         <Button

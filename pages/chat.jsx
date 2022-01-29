@@ -142,7 +142,7 @@ const Chat = () => {
                     flex: 1,
                     boxShadow: '0 2px 10px 0 rgb(0 0 0 / 20%)',
                     borderRadius: '5px',
-                    backgroundColor: `rgba(${appConfig.theme.colors.secondary.rgb['999']}, .80);`,
+                    backgroundColor: `rgba(${appConfig.theme.colors.secondary.rgb['999']}, .85);`,
                     height: '100%',
                     maxWidth: '90%',
                     maxHeight: '95vh',
