@@ -30,7 +30,7 @@ const UserCard = ({ user, onCloseClick, loading }) => (
                 sm: '100%',
                 xs: '100%'
             },
-            backgroundColor: appConfig.theme.colors.neutrals[800],
+            backgroundColor: appConfig.theme.colors.secondary['999'],
             position: 'fixed',
             bottom: {
                 xl: '20px',
@@ -109,6 +109,20 @@ const UserCard = ({ user, onCloseClick, loading }) => (
                     marginRight: '8px',
                     marginBottom: '8px',
                     marginTop: '80px',
+                    position: {
+                        xl: 'relative',
+                        lg: 'relative',
+                        md: 'relative',
+                        sm: 'absolute',
+                        xs: 'absolute'
+                    },
+                    top: {
+                        xl: '0',
+                        lg: '0',
+                        md: '0',
+                        sm: '120px',
+                        xs: '120px'
+                    },
                     border: `2px solid ${appConfig.theme.colors.secondary['999']}`,
                 }}
                 src={loading ? 'UserIcon.png' : `https://github.com/${user.login}.png`}
@@ -138,7 +152,7 @@ const UserCard = ({ user, onCloseClick, loading }) => (
                     display: 'block',
                     marginBottom: '32px',
                     textAlign: 'center',
-                    color: appConfig.theme.colors.neutrals[300]
+                    color: appConfig.theme.colors.neutrals['000']
                 }}>
                 {loading ? '...' : user.login}
             </Text>}
@@ -156,10 +170,10 @@ const UserCard = ({ user, onCloseClick, loading }) => (
                     alignItems: 'center',
                     margin: '0 8px'
                 }}>
-                    <Text variant="heading4" styleSheet={{ color: appConfig.theme.colors.neutrals[300] }}>
+                    <Text variant="heading4" styleSheet={{ color: appConfig.theme.colors.neutrals['000'] }}>
                         {loading ? '...' : user.following}
                     </Text>
-                    <Text variant="body3" styleSheet={{ color: appConfig.theme.colors.neutrals[300] }}>
+                    <Text variant="body3" styleSheet={{ color: appConfig.theme.colors.neutrals['000'] }}>
                         Seguindo
                     </Text>
                 </Box>
@@ -169,10 +183,10 @@ const UserCard = ({ user, onCloseClick, loading }) => (
                     alignItems: 'center',
                     margin: '0 8px'
                 }}>
-                    <Text variant="heading4" styleSheet={{ color: appConfig.theme.colors.neutrals[300] }}>
+                    <Text variant="heading4" styleSheet={{ color: appConfig.theme.colors.neutrals['000'] }}>
                         {loading ? '...' : user.followers}
                     </Text>
-                    <Text variant="body3" styleSheet={{ color: appConfig.theme.colors.neutrals[300] }}>
+                    <Text variant="body3" styleSheet={{ color: appConfig.theme.colors.neutrals['000'] }}>
                         Seguidores
                     </Text>
                 </Box>
@@ -183,10 +197,10 @@ const UserCard = ({ user, onCloseClick, loading }) => (
                     alignItems: 'center',
                     margin: '0 8px'
                 }}>
-                    <Text variant="heading4" styleSheet={{ color: appConfig.theme.colors.neutrals[300] }}>
+                    <Text variant="heading4" styleSheet={{ color: appConfig.theme.colors.neutrals['000'] }}>
                         {loading ? '...' : user.public_repos}
                     </Text>
-                    <Text variant="body3" styleSheet={{ color: appConfig.theme.colors.neutrals[300] }}>
+                    <Text variant="body3" styleSheet={{ color: appConfig.theme.colors.neutrals['000'] }}>
                         Repositórios
                     </Text>
                 </Box>
@@ -194,7 +208,7 @@ const UserCard = ({ user, onCloseClick, loading }) => (
             </Box>
             {loading &&
                 <Text variant="body3" styleSheet={{
-                    color: appConfig.theme.colors.neutrals[300],
+                    color: appConfig.theme.colors.neutrals['000'],
                     textAlign: 'center',
                     display: 'block'
                 }}>
