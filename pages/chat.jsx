@@ -131,7 +131,6 @@ const Chat = () => {
                     boxShadow: '0 2px 10px 0 rgb(0 0 0 / 20%)',
                     borderRadius: '5px',
                     backgroundColor: `rgba(${appConfig.theme.colors.rgb['700']}, .80);`,
-                    backdropFilter: 'blur(2px)',
                     height: '100%',
                     maxWidth: '90%',
                     maxHeight: '95vh',
@@ -145,8 +144,8 @@ const Chat = () => {
                         display: 'flex',
                         flex: 1,
                         height: '80%',
-                        backgroundColor: `rgba(${appConfig.theme.colors.rgb['600']}, .20);`,
-                        backdropFilter: 'blur(10px)',
+                        backgroundColor: `rgba(${appConfig.theme.colors.rgb['600']}, .80);`,
+                        backdropFilter: 'blur(2px)',
                         flexDirection: 'column',
                         borderRadius: '5px',
                         padding: '16px',
@@ -217,6 +216,7 @@ const Chat = () => {
                         </Box> */}
                     </Box>
                 </Box>
+
             </Box>
         </Box>
     )
@@ -323,20 +323,41 @@ const MessageList = ({ messages }) => {
                             }}
                             src={`https://github.com/${message.from}.png`}
                         />
-                        <Text tag="strong">
-                            {message.from}
-                        </Text>
-                        <Text
-                            styleSheet={{
-                                fontSize: '10px',
-                                marginLeft: '8px',
-                                color: appConfig.theme.colors.neutrals[300],
-                            }}
+                        <Box styleSheet={{
+                            display: 'flex',
+                            flexDirection: {
+                                xl: 'row',
+                                lg: 'row',
+                                md: 'row',
+                                sm: 'column',
+                                xs: 'column'
+                            }
+                        }}>
+                            <Text styleSheet={{
+                                'whiteSpace': 'nowrap',
+                                'overflow': 'hidden',
+                                'textOverflow': 'ellipsis'
+                            }} tag="strong">
+                                {message.from}
+                            </Text>
+                            <Text
+                                styleSheet={{
+                                    fontSize: '10px',
+                                    marginLeft: {
+                                        xl: '8px',
+                                        lg: '8px',
+                                        md: '8px',
+                                        sm: '0px',
+                                        xs: '0px'
+                                    },
+                                    color: appConfig.theme.colors.neutrals[300],
+                                }}
 
-                            tag="span"
-                        >
-                            {(new Date().toLocaleDateString())}
-                        </Text>
+                                tag="span"
+                            >
+                                {(new Date().toLocaleDateString())}
+                            </Text>
+                        </Box>
                     </Box>
                     <Text styleSheet={{
                         overflowWrap: 'break-word'
