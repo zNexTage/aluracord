@@ -166,6 +166,7 @@ const Chat = () => {
 
 
                     <MessageList
+                        username={username}
                         messages={listMessages}
                     />
 
@@ -262,7 +263,7 @@ const Header = ({ username }) => {
     )
 }
 
-const MessageList = ({ messages }) => {
+const MessageList = ({ messages, username }) => {
     const [showUserInfo, setShowUserInfo] = useState();
     const [userInfo, setUserInfo] = useState({});
     const [loading, setLoading] = useState(false);
@@ -353,7 +354,7 @@ const MessageList = ({ messages }) => {
                                 }}
                                 src={`https://github.com/${message.from}.png`}
                             />
-                            <Box styleSheet={{
+                            {message.from === username && <Box styleSheet={{
                                 display: 'flex'
                             }}>
                                 {/* <Icon name='FaPen' styleSheet={{
@@ -366,7 +367,7 @@ const MessageList = ({ messages }) => {
                                     styleSheet={{
                                         color: '#ffb967'
                                     }} />
-                            </Box>
+                            </Box>}
                         </Box>
                         <Box styleSheet={{
                             display: 'flex',
