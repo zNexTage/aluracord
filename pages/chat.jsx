@@ -31,6 +31,7 @@ const Chat = () => {
     const [listMessages, setListMessages] = useState([]);
     const router = useRouter();
     const [username, setUsername] = useState('');
+    const [isLoadingMessage, setIsLoadingMessage] = useState(false);
 
 
     useEffect(() => {
@@ -45,12 +46,22 @@ const Chat = () => {
     }, []);
 
     const getMessages = async () => {
-        const { data } = await supabaseClient
-            .from('messages')
-            .select('*')
-            .order('id', { ascending: false });
+        setIsLoadingMessage(true);
 
-        setListMessages(data);
+        try {
+            const { data } = await supabaseClient
+                .from('messages')
+                .select('*')
+                .order('id', { ascending: false });
+
+            setListMessages(data);
+        }
+        catch (err) {
+            //TODO: Tratar o erro aqui
+        }
+        finally {
+            setIsLoadingMessage(false);
+        }
     }
 
     const onInsertMessage = (newMessage) => {
@@ -164,11 +175,25 @@ const Chat = () => {
                     }}
                 >
 
-
-                    <MessageList
+                    {isLoadingMessage &&
+                        <Box styleSheet={{
+                            display: 'flex',
+                            flex: 1,
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
+                            <Image
+                                styleSheet={{
+                                    maxWidth: '75px'
+                                }}
+                                src='/Loading.gif' />
+                        </Box>
+                    }
+                    {!isLoadingMessage && <MessageList
                         username={username}
                         messages={listMessages}
-                    />
+                    />}
 
                     <Box
                         onSubmit={handleSendMessage}
@@ -229,7 +254,7 @@ const Chat = () => {
 
 
             </Box>
-        </Box>
+        </Box >
     )
 }
 
