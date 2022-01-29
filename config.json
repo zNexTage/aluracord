@@ -42,6 +42,16 @@
         }
     },
     "stickers": [
+        "Stickers/Windows.png",
+        "Stickers/Computer.png",
+        "Stickers/Planet01.png",
+        "Stickers/Planet02.png",
+        "Stickers/Dolphin.png",
+        "Stickers/FreeWifi.png",
+        "Stickers/Error404.png",
+        "Stickers/Medusa.png",
+        "Stickers/InternetExplorer.png",
+        "Stickers/Nokia.png",
         "https://www.alura.com.br/imersao-react-4/assets/figurinhas/Figurinha_1.png",
         "https://www.alura.com.br/imersao-react-4/assets/figurinhas/Figurinha_2.png",
         "https://www.alura.com.br/imersao-react-4/assets/figurinhas/Figurinha_3.png",
