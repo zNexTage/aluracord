@@ -66,6 +66,20 @@ const Chat = () => {
         setMessage(event.target.value);
     }
 
+    const isValidMessage = (message) => {
+        if (!message.trim()) {
+            alert('Por favor, informe a sua mensagem!!');
+            return false;
+        }
+
+        if (message.length > MAX_LENGTH_MESSAGE) {
+            alert(`A mensagem deve ter no máximo ${MAX_LENGTH_MESSAGE} caracteres.`);
+            return false;
+        }
+
+        return true;
+    }
+
     const handleKeyPressMessage = event => {
 
         if (event.charCode === 13) {
@@ -75,6 +89,10 @@ const Chat = () => {
     }
 
     const insertMessage = async (newMessage) => {
+        if (!isValidMessage(newMessage)) {
+            return;
+        }
+
         const { data } = await supabaseClient.from('messages')
             .insert([{
                 from: username,
@@ -87,16 +105,6 @@ const Chat = () => {
 
     const handleSendMessage = event => {
         event.preventDefault();
-
-        if (!message) {
-            alert('Digite a mensagem!!');
-            return;
-        }
-
-        if (message.length > MAX_LENGTH_MESSAGE) {
-            alert('A mensagem deve ter no máximo 250 caracteres.');
-            return;
-        }
 
         insertMessage(message);
     }
