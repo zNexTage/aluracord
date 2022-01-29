@@ -324,7 +324,8 @@ const MessageList = ({ messages, username }) => {
                         <Box
                             styleSheet={{
                                 display: 'flex',
-                                justifyContent: 'space-between'
+                                justifyContent: 'space-between',
+                                marginBottom: '10px'
                             }}
                         >
                             <Image
@@ -346,28 +347,34 @@ const MessageList = ({ messages, username }) => {
                                     }
                                 }}
                                 styleSheet={{
-                                    width: '20px',
-                                    height: '20px',
+                                    width: '30px',
+                                    height: '30px',
                                     borderRadius: '50%',
                                     display: 'inline-block',
                                     marginRight: '8px',
+                                    hover: {
+                                        transform: 'scale(1.20)',
+                                        transition: '.2s linear all',
+                                        cursor: 'pointer'
+                                    },
                                 }}
                                 src={`https://github.com/${message.from}.png`}
                             />
-                            {message.from === username && <Box styleSheet={{
-                                display: 'flex'
-                            }}>
-                                {/* <Icon name='FaPen' styleSheet={{
+                            {message.from === username &&
+                                <Box styleSheet={{
+                                    display: 'flex'
+                                }}>
+                                    {/* <Icon name='FaPen' styleSheet={{
                                     marginRight: '5px',
                                     color: appConfig.theme.colors.secondary['999']
                                 }} /> */}
-                                <Icon
-                                    onClick={() => onDeleteClick(message.id)}
-                                    name='FaTrash'
-                                    styleSheet={{
-                                        color: '#ffb967'
-                                    }} />
-                            </Box>}
+                                    <Icon
+                                        onClick={() => onDeleteClick(message.id)}
+                                        name='FaTrash'
+                                        styleSheet={{
+                                            color: '#ffb967'
+                                        }} />
+                                </Box>}
                         </Box>
                         <Box styleSheet={{
                             display: 'flex',
