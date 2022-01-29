@@ -14,9 +14,12 @@ const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const MAX_LENGTH_MESSAGE = 250;
 
-const listenerMessagesInRealTime = (addMessage) => {
+const listenerMessagesInRealTime = (addMessage, deleteMessage) => {
     return supabaseClient
         .from('messages')
+        .on('DELETE', data => {
+            deleteMessage(data.old.id);
+        })
         .on('INSERT', data => {
             addMessage(data.new);
         })
@@ -50,15 +53,24 @@ const Chat = () => {
         setListMessages(data);
     }
 
+    const onInsertMessage = (newMessage) => {
+        //Quero usar um valor de referência (objeto/array)
+        //Passar função para o setState
+        setListMessages((actuaList) => {
+            return [newMessage, ...actuaList]
+        });
+    }
+
+    const onDeleteMessage = messageId => {
+        setListMessages(actuaList => {
+            return actuaList.filter(message => messageId != message.id);
+        });
+    }
+
     useEffect(() => {
         getMessages();
-        listenerMessagesInRealTime((newMessage) => {
-            //Quero usar um valor de referência (objeto/array)
-            //Passar função para o setState
-            setListMessages((actuaList) => {
-                return [newMessage, ...actuaList]
-            });
-        });
+
+        listenerMessagesInRealTime(onInsertMessage, onDeleteMessage);
     }, []);
 
     const handleMessage = event => {
@@ -218,6 +230,7 @@ const Chat = () => {
                     </Box>
                 </Box>
 
+
             </Box>
         </Box>
     )
@@ -259,6 +272,16 @@ const MessageList = ({ messages }) => {
         setShowUserInfo(undefined);
     }
 
+    const onDeleteClick = async messageId => {
+        const confirmDelete = confirm('Deseja realmente apagar essa mensagem?');
+
+        if (confirmDelete) {
+            await supabaseClient.from('messages')
+                .delete()
+                .match({ id: messageId })
+        }
+    }
+
     return (
         <Box
             tag="ul"
@@ -297,33 +320,54 @@ const MessageList = ({ messages }) => {
                                 onCloseClick={onCloseCard}
                                 user={userInfo} />
                         }
-                        <Image
-                            onClick={async () => {
-                                setShowUserInfo(message.id);
-
-                                try {
-                                    setLoading(true);
-                                    const response = await fetch(`https://api.github.com/users/${message.from}`)
-                                    const data = await response.json();
-
-                                    setUserInfo(data);
-                                }
-                                catch (err) {
-                                    //TODO: Tratar o erro
-                                }
-                                finally {
-                                    setLoading(false);
-                                }
-                            }}
+                        <Box
                             styleSheet={{
-                                width: '20px',
-                                height: '20px',
-                                borderRadius: '50%',
-                                display: 'inline-block',
-                                marginRight: '8px',
+                                display: 'flex',
+                                justifyContent: 'space-between'
                             }}
-                            src={`https://github.com/${message.from}.png`}
-                        />
+                        >
+                            <Image
+                                onClick={async () => {
+                                    setShowUserInfo(message.id);
+
+                                    try {
+                                        setLoading(true);
+                                        const response = await fetch(`https://api.github.com/users/${message.from}`)
+                                        const data = await response.json();
+
+                                        setUserInfo(data);
+                                    }
+                                    catch (err) {
+                                        //TODO: Tratar o erro
+                                    }
+                                    finally {
+                                        setLoading(false);
+                                    }
+                                }}
+                                styleSheet={{
+                                    width: '20px',
+                                    height: '20px',
+                                    borderRadius: '50%',
+                                    display: 'inline-block',
+                                    marginRight: '8px',
+                                }}
+                                src={`https://github.com/${message.from}.png`}
+                            />
+                            <Box styleSheet={{
+                                display: 'flex'
+                            }}>
+                                {/* <Icon name='FaPen' styleSheet={{
+                                    marginRight: '5px',
+                                    color: appConfig.theme.colors.secondary['999']
+                                }} /> */}
+                                <Icon
+                                    onClick={() => onDeleteClick(message.id)}
+                                    name='FaTrash'
+                                    styleSheet={{
+                                        color: '#ffb967'
+                                    }} />
+                            </Box>
+                        </Box>
                         <Box styleSheet={{
                             display: 'flex',
                             flexDirection: {
@@ -373,6 +417,7 @@ const MessageList = ({ messages }) => {
                             >
                                 {(new Date().toLocaleDateString())}
                             </Text>
+
                         </Box>
                     </Box>
                     <Text styleSheet={{
@@ -385,6 +430,7 @@ const MessageList = ({ messages }) => {
                             message.text
                         )}
                     </Text>
+
                 </Text>
             ))}
         </Box>
