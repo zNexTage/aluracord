@@ -427,7 +427,7 @@ const MessageList = ({ messages, username }) => {
                                 }}
                                 src={`https://github.com/${message.from}.png`}
                             />
-                            {message.from === username &&
+                            {message.from.toLowerCase() === username.toLowerCase() &&
                                 <Box styleSheet={{
                                     display: 'flex'
                                 }}>
