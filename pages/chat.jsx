@@ -32,6 +32,7 @@ const Chat = () => {
     const router = useRouter();
     const [username, setUsername] = useState('');
     const [isLoadingMessage, setIsLoadingMessage] = useState(false);
+    const [isLoadingSendMessage, setIsLoadingSendMessage] = useState(false);
 
 
     useEffect(() => {
@@ -116,14 +117,24 @@ const Chat = () => {
             return;
         }
 
-        const { data } = await supabaseClient.from('messages')
-            .insert([{
-                from: username,
-                text: newMessage
-            }]);
+        setIsLoadingSendMessage(true);
 
-        // setListMessages([data.pop(), ...listMessages]);
-        setMessage('');
+        try {
+            await supabaseClient.from('messages')
+                .insert([{
+                    from: username,
+                    text: newMessage
+                }]);
+
+            setMessage('');
+        }
+        catch (err) {
+
+        }
+        finally {
+            setIsLoadingSendMessage(false);
+        }
+
     }
 
     const handleSendMessage = event => {
@@ -216,6 +227,7 @@ const Chat = () => {
                             onChange={handleMessage}
                             onKeyPress={handleKeyPressMessage}
                             maxLength={MAX_LENGTH_MESSAGE}
+                            disabled={isLoadingSendMessage}
                             value={message}
                             counter={false}
                             styleSheet={{
@@ -236,8 +248,10 @@ const Chat = () => {
                         }}>
                             <ButtonSendSticker
                                 onStickerClick={onStickerClick}
+                                disabled={isLoadingSendMessage}
                             />
                             <Button
+                                disabled={isLoadingSendMessage}
                                 type='submit'
                                 buttonColors={{
                                     contrastColor: appConfig.theme.colors.primary['050'],
