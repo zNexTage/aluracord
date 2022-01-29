@@ -325,7 +325,7 @@ const MessageList = ({ messages, username }) => {
                             styleSheet={{
                                 display: 'flex',
                                 justifyContent: 'space-between',
-                                marginBottom: '10px'
+                                marginBottom: '5px'
                             }}
                         >
                             <Image
@@ -368,12 +368,14 @@ const MessageList = ({ messages, username }) => {
                                     marginRight: '5px',
                                     color: appConfig.theme.colors.secondary['999']
                                 }} /> */}
-                                    <Icon
+                                    <Button
                                         onClick={() => onDeleteClick(message.id)}
-                                        name='FaTrash'
-                                        styleSheet={{
-                                            color: '#ffb967'
-                                        }} />
+                                        buttonColors={{
+                                            contrastColor: appConfig.theme.colors.neutrals['000'],
+                                            mainColor: appConfig.theme.colors.secondary['999']
+                                        }}
+                                        iconName="FaTrash" />
+
                                 </Box>}
                         </Box>
                         <Box styleSheet={{
