@@ -502,7 +502,9 @@ const MessageList = ({ messages, username }) => {
                     }} tag='p'>
                         {/*Declarativo */}
                         {message.text.startsWith(':sticker:') ? (
-                            <Image src={message.text.replace(':sticker:', '')} />
+                            <Image styleSheet={{
+                                maxWidth: '250px'
+                            }} src={message.text.replace(':sticker:', '')} />
                         ) : (
                             message.text
                         )}
