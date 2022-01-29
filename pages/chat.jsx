@@ -247,18 +247,45 @@ const Header = ({ username }) => {
                     Chat
                 </Text>
 
-                <Button
-                    variant='tertiary'
-                    colorVariant='neutral'
-                    label='Logout'
-                    href="/"
-                />
+                <Box styleSheet={{
+                    display: 'inline-flex',
+                    border: `1px solid ${appConfig.theme.colors.primary['800']}`,
+                    padding: '10px',
+                    borderRadius: '10px',
+                    alignItems: 'center',
+                    flexDirection: 'column'
+                }}>
+                    <Box styleSheet={{
+                        display: 'flex',
+                        alignItems: 'center'
+                    }}>
+                        <Image
+                            styleSheet={{
+                                maxWidth: '50px',
+                                maxHeight: '50px',
+                                borderRadius: '50%',
+                                marginRight: '10px',
+                                display: 'inline-block'
+                            }}
+                            src={`https://github.com/${username}.png`}
+                        />
+                        <Text variant='heading5'>
+                            Olá, {username}
+                        </Text>
+                    </Box>
+                    <Button
+                        buttonColors={{
+                            contrastColor:appConfig.theme.colors.neutrals['000']
+                        }}
+                        label='Sair'
+                        href="/"
+                    />
+
+                </Box>
 
             </Box>
 
-            <Text variant='heading5'>
-                Olá, {username}
-            </Text>
+
         </Box>
     )
 }
