@@ -6,22 +6,46 @@ const UserCard = ({ user, onCloseClick, loading }) => (
         styleSheet={{
             display: 'flex',
             flexDirection: 'column',
-            maxWidth: '300px',
+            maxWidth: {
+                xl: '300px',
+                lg: '300px',
+                md: '300px',
+                sm: '100%',
+                xs: '100%'
+            },
             justifyContent: 'center',
             alignItems: 'center',
             zIndex: 999,
             width: '100%',
-            height: 'auto',
+            height: {
+                xl: 'auto',
+                lg: 'auto',
+                md: 'auto',
+                sm: '100%',
+                xs: '100%'
+            },
             backgroundColor: appConfig.theme.colors.neutrals[800],
             position: 'fixed',
-            bottom: '20px',
-            left: '50px',
+            bottom: {
+                xl: '20px',
+                lg: '20px',
+                md: '20px',
+                sm: '0',
+                xs: '0'
+            },
+            left: {
+                xl: '150px',
+                lg: '150px',
+                md: '150px',
+                sm: '0px',
+                xs: '0px'
+            },
             padding: '10px',
         }}>
         <Box styleSheet={{
-            display: 'flex',
-            width: '100%',
-            justifyContent: 'flex-end'
+            position: 'absolute',
+            right: '10px',
+            top: '10px'
         }}>
 
             <Box
